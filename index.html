@@ -214,7 +214,7 @@ body.theme-zen .title{
 body{background:var(--bg);font-family:"Nunito","Noto Sans SC",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:max(24px,env(safe-area-inset-top)) 16px max(70px,calc(70px + env(safe-area-inset-bottom))) max(16px,env(safe-area-inset-left));color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 
 /* Header */
-.header{width:100%;max-width:420px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;animation:up-stable .45s ease forwards;transform:translateZ(0);-webkit-transform:translateZ(0);}
+.header{width:100%;max-width:420px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;animation:up-stable .45s ease forwards;transform:translateZ(0);-webkit-transform:translateZ(0);position:relative;z-index:10;}
 .header-left{flex:1;min-width:0;}
 .title{font-size:1.5rem;font-weight:900;font-family:"PingFang SC","苹方","Noto Sans SC","Microsoft YaHei",sans-serif;color:var(--text);letter-spacing:.02em;cursor:pointer;display:inline-block;border-radius:8px;padding:2px 6px;margin-left:-6px;transition:background .2s,color .3s,font-family .1s,letter-spacing .2s,text-shadow .3s;user-select:none;-webkit-user-select:none;}
 .title:hover{background:var(--purple-lt);}
@@ -640,25 +640,71 @@ body.theme-night .timer-widget{background:var(--surface);}
 .journal-jump-btn:hover{background:var(--done);color:#fff;}
 /* Touch action - pan-y lets panel scroll, JS overrides when dragging */
 .task-bubble{touch-action:pan-y;}
-.login-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;}
-.login-modal{background:var(--surface);border-radius:24px;padding:28px 24px;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.2);}
-.login-title{font-size:1.3rem;font-weight:900;color:var(--text);margin-bottom:4px;text-align:center;}
-.login-sub{font-size:.78rem;color:var(--text-lt);font-weight:600;text-align:center;margin-bottom:24px;}
-.login-field{margin-bottom:14px;}
-.login-label{font-size:.72rem;font-weight:800;color:var(--text-mid);margin-bottom:6px;display:block;}
-.login-input{width:100%;padding:12px 14px;background:var(--bg);border:2px solid transparent;border-radius:12px;outline:none;font-family:"Noto Sans SC",sans-serif;font-size:.9rem;color:var(--text);transition:border-color .2s;-webkit-appearance:none;}
-.login-input:focus{border-color:var(--purple);}
-.login-input::placeholder{color:var(--text-lt);}
-.login-btn{width:100%;padding:13px;border-radius:14px;border:none;background:var(--purple);color:#fff;font-family:"Nunito","Noto Sans SC",sans-serif;font-size:.9rem;font-weight:900;cursor:pointer;margin-top:8px;transition:all .18s;}
-.login-btn:active{transform:scale(.97);}
-.login-skip{display:block;text-align:center;margin-top:14px;font-size:.75rem;color:var(--text-lt);font-weight:700;cursor:pointer;padding:4px;}
-.login-tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--bg);padding:4px;border-radius:12px;}
-.login-tab{flex:1;padding:7px;border-radius:9px;border:none;background:transparent;font-size:.8rem;font-weight:800;color:var(--text-mid);cursor:pointer;transition:all .18s;}
-.login-tab.active{background:var(--surface);color:var(--text);box-shadow:var(--shadow);}
-.login-user-badge{display:flex;align-items:center;gap:8px;background:var(--purple-lt);border-radius:99px;padding:5px 12px 5px 5px;cursor:pointer;transition:all .18s;}
-.login-user-badge:hover{background:var(--purple);color:#fff;}
-.login-avatar{width:28px;height:28px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900;flex-shrink:0;}
-.login-username{font-size:.72rem;font-weight:800;color:var(--purple);max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+/* Login-related styles removed */
+
+/* Theme Selector Popup */
+.theme-selector-popup{
+  position:absolute;
+  top:100%;
+  right:0;
+  margin-top:8px;
+  background:var(--surface);
+  border-radius:16px;
+  box-shadow:0 8px 32px rgba(0,0,0,.15);
+  min-width:280px;
+  z-index:550;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(-8px);
+  transition:opacity .2s,transform .2s,visibility .2s;
+}
+.theme-selector-popup.show{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+}
+.theme-popup-header{
+  padding:14px 16px 8px;
+  font-size:.85rem;
+  font-weight:900;
+  color:var(--text);
+  border-bottom:1px solid var(--bg);
+}
+.theme-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  padding:12px;
+}
+.theme-option{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 10px;
+  background:var(--bg);
+  border-radius:12px;
+  border:2px solid transparent;
+  cursor:pointer;
+  transition:all .18s;
+}
+.theme-option:hover{
+  transform:translateY(-1px);
+  box-shadow:var(--shadow);
+}
+.theme-option.active{
+  border-color:var(--purple);
+  background:var(--purple-lt);
+}
+.theme-option-emoji{
+  font-size:1.4rem;
+  flex-shrink:0;
+}
+.theme-option-label{
+  font-size:.78rem;
+  font-weight:800;
+  color:var(--text);
+}
+
 /* History long-press hint */
 .history-item{cursor:default;-webkit-touch-callout:none;user-select:none;}
 .history-item.long-press-active{background:var(--done-lt)!important;transform:scale(.98);}
@@ -671,6 +717,16 @@ body.theme-night .timer-widget{background:var(--surface);}
 .pop{animation:pop .3s ease;}
 .shake{animation:shake .35s ease;}
 </style>
+
+<!-- Tauri API (仅在 Tauri 环境中加载) -->
+<script type="module">
+  if (window.__TAURI__) {
+    // Tauri 环境检测
+    window.__TAURI_ENV__ = 'tauri';
+  } else {
+    window.__TAURI_ENV__ = 'web';
+  }
+</script>
 </head>
 <body>
 <canvas id="confetti-canvas"></canvas>
@@ -708,32 +764,6 @@ body.theme-night .timer-widget{background:var(--surface);}
 <!-- PWA migration banner -->
 <div class="pwa-banner" id="pwaBanner" onclick="openExportModal(true)">
   📱 检测到从主屏幕启动<br>点击这里从浏览器导入历史数据 →
-</div>
-
-<!-- Login Modal -->
-<div class="login-overlay" id="loginOverlay" style="display:none;">
-  <div class="login-modal">
-    <div class="login-title">👾 Life Bingo</div>
-    <div class="login-sub">账号仅存本地，用于多用户隔离数据<br>换设备或浏览器需重新注册<br><span style="color:#c05040;font-weight:800;">⚠️ 请勿清除浏览器缓存，否则数据会丢失<br>建议先用 📦 备份迁移码再进行此操作</span></div>
-    <div class="login-tabs">
-      <button class="login-tab active" id="tabLogin" onclick="switchLoginTab('login')">登录</button>
-      <button class="login-tab" id="tabReg" onclick="switchLoginTab('reg')">注册</button>
-    </div>
-    <div class="login-field">
-      <label class="login-label">用户名</label>
-      <input class="login-input" id="loginUser" type="text" placeholder="输入用户名" maxlength="20" autocomplete="username" autocorrect="off" autocapitalize="none"/>
-    </div>
-    <div class="login-field">
-      <label class="login-label">密码</label>
-      <input class="login-input" id="loginPass" type="password" placeholder="输入密码" maxlength="30" autocomplete="current-password"/>
-    </div>
-    <div class="login-field" id="loginPassConfirmField" style="display:none;">
-      <label class="login-label">确认密码</label>
-      <input class="login-input" id="loginPassConfirm" type="password" placeholder="再次输入密码" maxlength="30" autocomplete="new-password"/>
-    </div>
-    <button class="login-btn" id="loginSubmitBtn" onclick="doLogin()">登录</button>
-    <span class="login-skip" onclick="skipLogin()">暂时跳过，仅使用本地存储</span>
-  </div>
 </div>
 
 <!-- Task Panel -->
@@ -908,10 +938,15 @@ body.theme-night .timer-widget{background:var(--surface);}
     </div>
   </div>
   <div class="header-right">
-    <div id="userBadgeBtn" onclick="openLoginModal()" style="display:none;"></div>
     <button class="btn-icon" onclick="openCal()" title="日历">📅</button>
     <button class="btn-icon" onclick="openHistory()" title="历史">🕐</button>
-    <button class="btn-icon" onclick="toggleTheme()" id="themeBtn" title="主题">🎨</button>
+    <div style="position:relative;z-index:1;">
+      <button class="btn-icon" onclick="openThemeSelector()" id="themeBtn" title="主题">🎨</button>
+      <div class="theme-selector-popup" id="themePopup">
+        <div class="theme-popup-header">选择主题</div>
+        <div class="theme-grid" id="themeGrid"></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1012,7 +1047,6 @@ let mandatory=new Set();
 let detailPos=-1;
 let appName='Life Bingo';
 let timestamps={};
-let currentUser=null; // {username, passwordHash}
 
 // viewingDate: null = today, else 'YYYY-MM-DD'
 let viewingDate=null;
@@ -1096,10 +1130,17 @@ const ls={
 };
 function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
 
-// ── User prefix (per-user data isolation) ─────────────────────────────────────
-function userPrefix(){return currentUser?KP+'u_'+currentUser.username+'_':KP;}
-// Per-user key (daily state keys use user prefix)
-const activeKey=()=>userPrefix()+activeDate();
+// ── User system removed - using direct localStorage ─────────────────────────────
+// Simplified userPrefix - always returns global prefix
+function userPrefix(){return KP;}
+// currentUser always null now (no login system)
+let currentUser=null;
+// Stub function for compatibility (does nothing)
+function updateUserBadge(){
+  // No user badge displayed - login system removed
+}
+// Per-user key now just uses global prefix
+const activeKey=()=>KP+activeDate();
 
 // ── Version migration ─────────────────────────────────────────────────────────
 function runMigration(){
@@ -1236,22 +1277,8 @@ function restoreActiveSnapshot(activeSnapshot){
 }
 function loadAll(){
   runMigration();
-  // Load user
-  try{const s=ls.get(K.user);if(s){currentUser=JSON.parse(s);updateUserBadge();}}catch(e){}
-  // If logged in, ensure account data is in localStorage (restore from cookie if needed)
-  if(currentUser){
-    const accountKey=KP+'account_'+currentUser.username;
-    if(!localStorage.getItem(accountKey)){
-      const fromCookie=ck.get(accountKey);
-      if(fromCookie)try{localStorage.setItem(accountKey,fromCookie);}catch(e){}
-    }
-  }
-  // Use user-specific keys if available
-  const gKey=currentUser?KP+'u_'+currentUser.username+'_groups':K.groups;
-  const dKey=currentUser?KP+'u_'+currentUser.username+'_details':K.detail;
-  const mKey=currentUser?KP+'u_'+currentUser.username+'_mandatory':K.mand;
-  const tKey=currentUser?KP+'u_'+currentUser.username+'_timestamps':K.ts;
-  try{const s=ls.get(gKey)||ls.get(K.groups);if(s)groups=JSON.parse(s);}catch(e){}
+  // Load global data (no user-specific logic)
+  try{const s=ls.get(K.groups);if(s)groups=JSON.parse(s);}catch(e){}
   // Sanitize: remove any corrupt entries where group/task name looks like drag data (e.g. "task:0:25" or "0,25")
   groups=groups.filter(g=>g&&typeof g.name==='string');
   let _sanitized=false;
@@ -1262,10 +1289,10 @@ function loadAll(){
     if(g.tasks.length!==before)_sanitized=true;
   });
   if(_sanitized)ls.set(getUserKey('groups'),JSON.stringify(groups));
-  try{const s=ls.get(dKey)||ls.get(K.detail);if(s)details=JSON.parse(s);}catch(e){}
-  try{const s=ls.get(mKey)||ls.get(K.mand);if(s)mandatory=new Set(JSON.parse(s));}catch(e){}
+  try{const s=ls.get(K.detail);if(s)details=JSON.parse(s);}catch(e){}
+  try{const s=ls.get(K.mand);if(s)mandatory=new Set(JSON.parse(s));}catch(e){}
   try{const s=ls.get(K.name);if(s){appName='Life Bingo';document.getElementById('titleDisplay').textContent='Life Bingo';document.title='Life Bingo';ls.set(K.name,'Life Bingo');}}catch(e){}
-  try{const s=ls.get(tKey)||ls.get(K.ts);if(s)timestamps=JSON.parse(s);}catch(e){}
+  try{const s=ls.get(K.ts);if(s)timestamps=JSON.parse(s);}catch(e){}
   // Cleanup: deduplicate timestamps for PAST days only (never touch today)
   // Keep entry with latest completion time per task name; remove empty-time orphans
   try{
@@ -1292,7 +1319,7 @@ function loadAll(){
 }
 
 // User-specific save keys
-function getUserKey(base){return currentUser?KP+'u_'+currentUser.username+'_'+base:base;}
+function getUserKey(base){return KP+base;}
 
 function saveUserData(){
   // Save groups/details/mandatory under user prefix
@@ -1588,12 +1615,58 @@ function loadTheme(){
   const th=THEMES.find(x=>x.id===t)||THEMES[0];
   document.getElementById('themeBtn').textContent=th.emoji;
 }
-function toggleTheme(){
-  const idx=THEMES.findIndex(t=>t.id===_currentTheme);
-  const next=THEMES[(idx+1)%THEMES.length];
-  applyTheme(next.id);
-  showToast(next.emoji+' '+next.label);
+// Theme selector popup functions
+function openThemeSelector(){
+  const popup=document.getElementById('themePopup');
+  if(popup.classList.contains('show')){
+    closeThemeSelector();
+    return;
+  }
+  renderThemeOptions();
+  popup.classList.add('show');
+  // Close popup when clicking outside
+  setTimeout(()=>{
+    document.addEventListener('click',handleThemePopupClick);
+  },10);
+}
+
+function closeThemeSelector(){
+  const popup=document.getElementById('themePopup');
+  popup.classList.remove('show');
+  document.removeEventListener('click',handleThemePopupClick);
+}
+
+function handleThemePopupClick(e){
+  const popup=document.getElementById('themePopup');
+  const btn=document.getElementById('themeBtn');
+  if(!popup.contains(e.target)&&!btn.contains(e.target)){
+    closeThemeSelector();
+  }
+}
+
+function renderThemeOptions(){
+  const grid=document.getElementById('themeGrid');
+  grid.innerHTML='';
+  THEMES.forEach(theme=>{
+    const div=document.createElement('div');
+    div.className='theme-option'+(theme.id===_currentTheme?' active':'');
+    div.innerHTML=`
+      <span class="theme-option-emoji">${theme.emoji}</span>
+      <span class="theme-option-label">${theme.label}</span>
+    `;
+    div.onclick=()=>selectTheme(theme.id);
+    grid.appendChild(div);
+  });
+}
+
+function selectTheme(id){
+  applyTheme(id);
+  renderThemeOptions();
+  const t=THEMES.find(x=>x.id===id)||THEMES[0];
+  showToast(t.emoji+' '+t.label);
   vibrate(20);
+  // Keep popup open for visual feedback, close after delay
+  setTimeout(()=>closeThemeSelector(),300);
 }
 
 
@@ -3613,98 +3686,7 @@ function doConfetti(){
   let f=0;(function draw(){c.clearRect(0,0,cv.width,cv.height);let alive=false;ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.rot+=p.vrot;p.vy+=.08;if(f>55)p.alpha=Math.max(0,p.alpha-.014);if(p.y<cv.height+20&&p.alpha>0)alive=true;c.save();c.globalAlpha=p.alpha;c.translate(p.x,p.y);c.rotate(p.rot*Math.PI/180);c.fillStyle=p.color;c.fillRect(-p.w/2,-p.h/2,p.w,p.h);c.restore();});f++;if(alive&&f<200)requestAnimationFrame(draw);else c.clearRect(0,0,cv.width,cv.height);})();
 }
 
-// ── Login / User ──────────────────────────────────────────────────────────────
-function simpleHash(s){let h=0;for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return h.toString(36);}
-
-function switchLoginTab(tab){
-  document.getElementById('tabLogin').classList.toggle('active',tab==='login');
-  document.getElementById('tabReg').classList.toggle('active',tab==='reg');
-  document.getElementById('loginPassConfirmField').style.display=tab==='reg'?'block':'none';
-  document.getElementById('loginSubmitBtn').textContent=tab==='reg'?'注册':'登录';
-  document.getElementById('loginSubmitBtn').onclick=tab==='reg'?doRegister:doLogin;
-}
-
-function doLogin(){
-  const user=document.getElementById('loginUser').value.trim();
-  const pass=document.getElementById('loginPass').value;
-  if(!user||!pass){showLoginError('请填写用户名和密码');return;}
-  const accountKey=KP+'account_'+user;
-  let stored=ls.get(accountKey);
-  // Fallback: try cookie if localStorage missing
-  if(!stored)stored=ck.get(accountKey);
-  if(!stored){showLoginError('此设备上找不到该账号——账号仅存本地，换设备或浏览器后需重新注册');return;}
-  // Restore to localStorage if it was missing
-  try{localStorage.setItem(accountKey,stored);}catch(e){}
-  const acc=JSON.parse(stored);
-  if(acc.hash!==simpleHash(pass)){showLoginError('密码错误');return;}
-  currentUser={username:user};
-  ls.set(K.user,JSON.stringify(currentUser));
-  // Also back up account info to cookie so it survives localStorage wipes
-  ck.set(accountKey,stored);
-  closeLoginModal();
-  loadAll();load();buildGrid();render();
-  updateUserBadge();
-  showToast(`欢迎回来，${user} 👋`);
-}
-
-function doRegister(){
-  const user=document.getElementById('loginUser').value.trim();
-  const pass=document.getElementById('loginPass').value;
-  const pass2=document.getElementById('loginPassConfirm').value;
-  if(!user||!pass){showLoginError('请填写用户名和密码');return;}
-  if(pass!==pass2){showLoginError('两次密码不一致');return;}
-  if(ls.get(KP+'account_'+user)){showLoginError('用户名已被占用');return;}
-  const accountData=JSON.stringify({hash:simpleHash(pass)});
-  ls.set(KP+'account_'+user,accountData);
-  // Also back up to cookie so it survives localStorage wipes
-  ck.set(KP+'account_'+user,accountData);
-  currentUser={username:user};
-  ls.set(K.user,JSON.stringify(currentUser));
-  closeLoginModal();
-  updateUserBadge();
-  showToast(`注册成功，欢迎 ${user}！🎉`);
-}
-
-function showLoginError(msg){
-  let err=document.getElementById('loginErr');
-  if(!err){err=document.createElement('div');err.id='loginErr';err.style.cssText='color:#c05040;font-size:.75rem;font-weight:700;text-align:center;margin-top:8px;';document.querySelector('.login-btn').after(err);}
-  err.textContent=msg;
-}
-
-function skipLogin(){
-  currentUser=null;ls.set(K.user,'');
-  closeLoginModal();
-  updateUserBadge();
-}
-
-function openLoginModal(){
-  if(currentUser){
-    // Show logout option
-    if(confirm(`当前用户：${currentUser.username}\n确定要退出登录吗？`)){
-      currentUser=null;ls.set(K.user,'');
-      updateUserBadge();
-      showToast('已退出登录');
-    }
-    return;
-  }
-  document.getElementById('loginOverlay').style.display='flex';
-  document.getElementById('loginUser').value='';
-  document.getElementById('loginPass').value='';
-}
-
-function closeLoginModal(){document.getElementById('loginOverlay').style.display='none';}
-
-function updateUserBadge(){
-  const btn=document.getElementById('userBadgeBtn');
-  if(!btn)return;
-  if(currentUser){
-    btn.style.display='flex';
-    btn.innerHTML=`<div class="login-user-badge"><div class="login-avatar">${currentUser.username[0].toUpperCase()}</div><span class="login-username">${escHtml(currentUser.username)}</span></div>`;
-  } else {
-    btn.style.display='flex';
-    btn.innerHTML=`<button class="btn-icon" title="登录" style="font-size:.7rem;font-weight:800;color:var(--purple);">登录</button>`;
-  }
-}
+// ── User system removed - using direct localStorage ─────────────────────────────
 
 // ── Unified export format (WeChat miniprogram compatible) ─────────────────────
 // Exports all data as a single structured JSON object that maps 1:1
@@ -3837,42 +3819,15 @@ function importData(){
     const data=JSON.parse(decodeURIComponent(escape(atob(cleaned))));
     let count=0;
 
-    // ── 检测导出数据里的用户名前缀 ──────────────────────────────────────────
-    let srcUserPrefix = null;
-    const kpEsc = KP.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-    for (const k of Object.keys(data)) {
-      const m = k.match(new RegExp('^' + kpEsc + 'u_(.+?)_(?:groups|details|mandatory|timestamps|achievements)$'));
-      if (m) { srcUserPrefix = KP + 'u_' + m[1] + '_'; break; }
-    }
-
-    // 当前环境的用户前缀
-    const dstUserPrefix = currentUser ? KP + 'u_' + currentUser.username + '_' : null;
-
-    // 用户相关的字段名（需要做前缀映射的）
-    const USER_FIELDS = /^(groups|details|mandatory|timestamps|achievements|\d{4}-\d{2}-\d{2})$/;
-
+    // Simplified: directly import all keys without user prefix mapping
     for (const [k, v] of Object.entries(data)) {
       if (!k.startsWith(KP)) continue;
+      // Strip user prefix if present (for backward compatibility with old exports)
       let targetKey = k;
-
-      if (srcUserPrefix && k.startsWith(srcUserPrefix)) {
-        const field = k.slice(srcUserPrefix.length);
-        if (dstUserPrefix) {
-          // 场景②③：来源有用户前缀，目标已登录 → 映射到当前用户（不论用户名是否相同）
-          targetKey = dstUserPrefix + field;
-        } else {
-          // 场景④：来源有用户前缀，目标未登录 → 剥掉前缀写入全局 key
-          targetKey = KP + field;
-        }
-      } else if (!srcUserPrefix && dstUserPrefix) {
-        // 场景⑤：来源无用户前缀，目标已登录 → 用户数据字段加上目标用户前缀
-        const field = k.slice(KP.length);
-        if (USER_FIELDS.test(field)) {
-          targetKey = dstUserPrefix + field;
-        }
+      const userPrefixMatch = k.match(/^adhd_bingo_u_.+?_(.+)$/);
+      if (userPrefixMatch) {
+        targetKey = KP + userPrefixMatch[1];
       }
-      // 场景①：来源无用户前缀，目标未登录 → 原样写入，无需处理
-
       ls.set(targetKey, v);
       count++;
     }
@@ -3903,6 +3858,35 @@ function checkPWAFirstRun(){
   setTimeout(()=>showToast('💡 首次使用！建议先去 📦 备份一下迁移码'),3000);
 }
 
+// ── Tauri Storage Init ─────────────────────────────────────────────────────────
+(async function initTauriStorage(){
+  if (window.__TAURI__) {
+    try {
+      // 动态导入 Tauri 存储模块
+      const { default: fetch } = await import('@tauri-apps/plugin-fs');
+      console.log('🚀 Running in Tauri App mode');
+
+      // 标记为 Tauri 环境
+      window.__IS_TAURI__ = true;
+
+      // 自动每日备份
+      setInterval(async () => {
+        try {
+          // 这里可以调用自动备份功能
+          // await storage.backup();
+        } catch (e) {
+          console.error('Backup failed:', e);
+        }
+      }, 24 * 60 * 60 * 1000); // 每24小时
+
+    } catch (e) {
+      console.warn('Tauri storage init failed, falling back to localStorage:', e);
+    }
+  } else {
+    console.log('🌐 Running in Web mode');
+  }
+})();
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 const now=new Date(),WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 document.getElementById('dateDisplay').textContent=`${now.getFullYear()} · ${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')} · ${WD[now.getDay()]}`;
@@ -3916,12 +3900,6 @@ checkPWAFirstRun();
 document.querySelectorAll('.header,.progress-card,.cheer-badge-row,.grid-card,.bottom').forEach(el=>{
   el.addEventListener('animationend',()=>{el.style.opacity='1';},{once:true});
 });
-// Show login modal if first time (no user set)
-if(!ls.get(K.user)){
-  setTimeout(()=>document.getElementById('loginOverlay').style.display='flex',800);
-} else {
-  updateUserBadge();
-}
 
 </script>
 

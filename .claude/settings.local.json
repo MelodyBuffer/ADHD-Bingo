@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl:*)",
+      "Bash(git checkout:*)",
+      "Bash(node:*)",
+      "Bash(npm:*)",
+      "Bash(cargo:*)",
+      "Bash(timeout:*)",
+      "Bash(python:*)",
+      "Bash(ping:*)",
+      "Bash(test:*)"
+    ]
+  }
+}
