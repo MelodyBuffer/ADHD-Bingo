@@ -10,7 +10,10 @@
       "Bash(python:*)",
       "Bash(ping:*)",
       "Bash(test:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git stash:*)",
+      "Bash(git ls-tree:*)"
     ]
   }
 }
