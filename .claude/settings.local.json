@@ -13,7 +13,12 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git stash:*)",
-      "Bash(git ls-tree:*)"
+      "Bash(git ls-tree:*)",
+      "Bash(if:*)",
+      "Bash(then echo \"Dependencies installed\")",
+      "Bash(else echo \"Need to install dependencies\")",
+      "Bash(fi:*)",
+      "Bash(npx tauri icon:*)"
     ]
   }
 }
