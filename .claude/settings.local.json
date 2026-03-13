@@ -18,7 +18,20 @@
       "Bash(then echo \"Dependencies installed\")",
       "Bash(else echo \"Need to install dependencies\")",
       "Bash(fi:*)",
-      "Bash(npx tauri icon:*)"
+      "Bash(npx tauri icon:*)",
+      "Bash(npx tauri --help:*)",
+      "Bash(rustc:*)",
+      "Bash(npx tauri android --help:*)",
+      "Bash(npx tauri android init:*)",
+      "Bash(java:*)",
+      "Bash(then:*)",
+      "Bash(else echo \"NDK 目录不存在，需要在 Android Studio 中安装\")",
+      "Bash(npx tauri android build:*)",
+      "Bash(chmod:*)",
+      "WebSearch",
+      "Bash(unzip:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)"
     ]
   }
 }

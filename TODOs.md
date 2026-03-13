@@ -77,7 +77,7 @@ web详细需要做的事情：
    - `renderThemeOptions()`: 动态渲染主题选项
    - `selectTheme(id)`: 应用选中的主题
    - `handleThemePopupClick()`: 点击外部关闭popup
-4. 交互体验：
+4. 交互体验：`
    - 点击主题按钮切换popup显示/隐藏
    - 点击主题选项立即应用并显示toast提示
    - 选择主题后300ms自动关闭popup
@@ -148,4 +148,104 @@ npm run build
 ```
 
 **详细说明**: 查看 `TAURI_DEVELOPMENT.md`
+
+---
+
+### 2025-03-13: Android APK 构建系统搭建
+
+**分支**: `main`
+**目的**: 将 Web 应用打包为 Android APK
+
+**已完成的工作：**
+1. **Android SDK/NDK 配置**：
+   - 初始化 Android 项目 (`npx tauri android init`)
+   - 配置 Android SDK 和 NDK
+   - 设置 build.gradle.kts 编译配置
+2. **Rust 移动端支持**：
+   - 添加 `[lib]` 配置到 `Cargo.toml`
+   - 创建 `lib.rs` 移动端入口点
+   - 添加 `mobile_entry_point` 宏
+3. **权限和配置**：
+   - 创建 `capabilities/default.json` 配置权限
+   - 配置 `tauri.conf.json` 的 Android 属性
+4. **跨平台构建脚本**：
+   - `build-android.py` - Python 构建脚本（Windows 兼容）
+     - 使用 `shutil.copy2()` 代替 `cp` 命令
+     - UTF-8 编码支持 Windows 控制台
+     - 彩色输出和进度提示
+   - 添加 npm 快捷命令到 `package.json`
+5. **架构优化**：
+   - 只构建 ARM 架构 (ARM64 + ARMv7)
+   - 移除 x86/x86_64（模拟器架构）
+   - APK 体积从 399 MB 减少到 17 MB（Release）
+6. **文档**：
+   - `BUILD_ANDROID.md` - Android 构建完整指南
+   - 构建命令、性能对比、常见问题
+
+**文件结构：**
+```
+src-tauri/
+├── gen/android/               # Android 项目
+│   └── app/
+│       └── build.gradle.kts   # Android 构建配置
+├── src/
+│   ├── main.rs               # 桌面应用入口
+│   └── lib.rs                # 移动端入口（新增）
+├── capabilities/
+│   └── default.json          # 权限配置（新增）
+├── Cargo.toml                # 添加 [lib] 配置
+├── tauri.conf.json           # 添加 frontendDist 配置
+build-android.py              # 构建脚本（新增）
+BUILD_ANDROID.md              # 构建文档（新增）
+package.json                  # 添加 Android npm 命令
+```
+
+**性能对比：**
+| 版本 | 体积 | 架构 | 用途 |
+|------|------|------|------|
+| Debug | 399 MB | 4 个 | 开发测试 |
+| Release | 33 MB | 4 个 | 生产发布 |
+| Release (ARM-only) | **17 MB** | **2 个 (ARM)** | **推荐** |
+
+**构建命令：**
+```bash
+# Debug 版本
+npm run android
+
+# Release 版本（仅 ARM，17 MB）
+npm run android:release
+
+# 清理后重建
+npm run android:clean
+```
+
+**输出文件：**
+- Debug APK: `src-tauri/gen/android/app/build/outputs/apk/universal/debug/app-universal-debug.apk`
+- Release APK: `src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release-unsigned.apk`
+
+**安装到设备：**
+```bash
+adb install src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release-unsigned.apk
+```
+
+**关键改进：**
+- ✅ 跨平台兼容（Windows/macOS/Linux）
+- ✅ 自动化构建流程
+- ✅ 仅包含真实设备架构
+- ✅ 构建时间减半（只需编译 2 个架构）
+- ✅ APK 体积减少 48%
+
+**注意事项：**
+- 构建前需要先创建 `dist/` 目录并复制 Web 资源
+- Android SDK/NDK 需要预先安装
+- 需要 Python 3 和 Node.js 环境
+
+**待完成工作：**
+1. ✅ Android 开发环境配置
+2. ✅ 构建脚本和文档
+3. ⏳ 应用图标设计（目前使用默认图标）
+4. ⏳ 真机测试和性能优化
+5. ⏳ Google Play 上架准备（签名、AAB 等）
+
+**详细说明**: 查看 `BUILD_ANDROID.md`
 

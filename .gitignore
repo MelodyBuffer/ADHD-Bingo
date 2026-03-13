@@ -9,12 +9,43 @@ pnpm-debug.log*
 src-tauri/target/
 src-tauri/Cargo.lock
 
+# Android
+src-tauri/gen/android/app/build/
+src-tauri/gen/android/.gradle/
+src-tauri/gen/android/local.properties
+*.apk
+*.aab
+*.ap_
+*.dex
+*.keystore
+*.jks
+
+# Android signing - 保护签名密钥
+release.keystore
+*.keystore
+*.jks
+src-tauri/gen/android/app/tauri.properties
+
 # Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
+*.egg-info/
+dist-info/
+.eggs/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.manifest
+*.spec
 
 # Build outputs
 dist/
@@ -23,6 +54,7 @@ build/
 *.dll
 *.dylib
 *.app
+*.msi
 
 # Environment variables
 .env
@@ -47,6 +79,7 @@ Thumbs.db
 ehthumbs.db
 .Spotlight-V100
 .Trashes
+Desktop.ini
 
 # Logs
 logs/

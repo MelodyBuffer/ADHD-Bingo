@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "tauri dev",
     "build": "tauri build",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "android": "python build-android.py",
+    "android:debug": "python build-android.py",
+    "android:release": "python build-android.py --release",
+    "android:clean": "python build-android.py --clean"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.2.0",
