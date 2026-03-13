@@ -9,7 +9,8 @@
       "Bash(timeout:*)",
       "Bash(python:*)",
       "Bash(ping:*)",
-      "Bash(test:*)"
+      "Bash(test:*)",
+      "Bash(git add:*)"
     ]
   }
 }
